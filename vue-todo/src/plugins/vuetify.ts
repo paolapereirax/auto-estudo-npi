@@ -7,5 +7,9 @@ export default createVuetify ({
         defaultSet: 'mdi',
         aliases,
         sets: { mdi },
+    },
+
+    theme: {
+        defaultTheme: 'light'
     }
 })

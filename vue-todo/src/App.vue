@@ -50,10 +50,10 @@ onMounted(async () => {
   <v-container class="app">
     <v-row justify="center">
       <v-col cols="12" md="8">
-        <v-sheet class="pa-4">
-          <v-row>
+        <v-sheet rounded class="pa-4">
+          <v-row class="pb-4">
             <v-col>
-              <h2 class="text-center">To-Do List</h2>
+              <h2 class="text-center">To Do List</h2>
             </v-col>
           </v-row>
           <v-form @submit.prevent="addTodo">
@@ -67,11 +67,13 @@ onMounted(async () => {
               v-model="description"
               outlined
             />
-            <v-btn type="submit" color="success" block>Adicionar Tarefa</v-btn>
+            <v-row class="pa-4 justify-end">
+              <v-btn type="submit" color="success" >Adicionar Tarefa</v-btn>
+            </v-row>
           </v-form>
         </v-sheet>
         
-        <v-sheet class="pa-4 mt-4">
+        <v-sheet rounded class="pa-4 mt-4">
           <h3>Lista de Tarefas</h3>
           <v-list>
             <v-list-item
@@ -80,17 +82,23 @@ onMounted(async () => {
               :class="{ 'completed': todo.completed }"
               @click="toggleTodoCompletion(todo)"
             >
-              <v-checkbox
-                v-model="todo.completed"
-                @change="toggleTodoCompletion(todo)"
-              ></v-checkbox>
-              <v-list-item-content>
-                <v-list-item-title>{{ todo.title }}</v-list-item-title>
-                <v-list-item-subtitle>{{ todo.description }}</v-list-item-subtitle>
-              </v-list-item-content>
-              <v-btn icon @click.stop="removeTodo(todo)">
-                <v-icon color="error">mdi-delete</v-icon>
-              </v-btn>
+              <v-row class="pa-4 mt-4 justify-space-between">
+                <v-list-item-content>
+                  <v-row>
+                    <v-checkbox
+                    v-model="todo.completed"
+                    @change="toggleTodoCompletion(todo)"
+                  ></v-checkbox>
+                  <v-col>
+                    <v-list-item-title>{{ todo.title }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ todo.description }}</v-list-item-subtitle>
+                  </v-col>
+                  </v-row>
+                </v-list-item-content>
+                <v-btn size="small" icon @click.stop="removeTodo(todo)">
+                  <v-icon color="error">mdi-delete</v-icon>
+                </v-btn>
+              </v-row>
             </v-list-item>
           </v-list>
         </v-sheet>
