@@ -47,120 +47,60 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="app">
-    <section class="header">
-      <h2>To-Do List</h2>
-    </section>
-
-    <section class="create-todo">
-      <h3>Adicionar Nova Tarefa</h3>
-      <form @submit.prevent="addTodo">
-        <input 
-          type="text" 
-          placeholder="Título da tarefa"
-          v-model="title" 
-          class="input-field" 
-        />
-        <input 
-          type="text" 
-          placeholder="Descrição da tarefa"
-          v-model="description" 
-          class="input-field" 
-        />
-        <button type="submit" class="button-submit">Adicionar Tarefa</button>
-      </form>
-    </section>
-
-    <section class="todo-list">
-      <h3>Lista de Tarefas</h3>
-      <div v-for="todo in todos" :key="todo.id" :class="`todo-item ${todo.completed ? 'completed' : ''}`">
-        <label>
-          <input type="checkbox" v-model="todo.completed" @change="toggleTodoCompletion(todo)" />
-          <span>{{ todo.title }}</span>
-        </label>
-        <p>{{ todo.description }}</p>
-        <button @click="removeTodo(todo)" class="delete-button">Deletar</button>
-      </div>
-    </section>
-  </main>
+  <v-container class="app">
+    <v-row justify="center">
+      <v-col cols="12" md="8">
+        <v-sheet class="pa-4">
+          <v-row>
+            <v-col>
+              <h2 class="text-center">To-Do List</h2>
+            </v-col>
+          </v-row>
+          <v-form @submit.prevent="addTodo">
+            <v-text-field
+              label="Título da tarefa"
+              v-model="title"
+              outlined
+            />
+            <v-text-field
+              label="Descrição da tarefa"
+              v-model="description"
+              outlined
+            />
+            <v-btn type="submit" color="success" block>Adicionar Tarefa</v-btn>
+          </v-form>
+        </v-sheet>
+        
+        <v-sheet class="pa-4 mt-4">
+          <h3>Lista de Tarefas</h3>
+          <v-list>
+            <v-list-item
+              v-for="todo in todos"
+              :key="todo.id"
+              :class="{ 'completed': todo.completed }"
+              @click="toggleTodoCompletion(todo)"
+            >
+              <v-checkbox
+                v-model="todo.completed"
+                @change="toggleTodoCompletion(todo)"
+              ></v-checkbox>
+              <v-list-item-content>
+                <v-list-item-title>{{ todo.title }}</v-list-item-title>
+                <v-list-item-subtitle>{{ todo.description }}</v-list-item-subtitle>
+              </v-list-item-content>
+              <v-btn icon @click.stop="removeTodo(todo)">
+                <v-icon color="error">mdi-delete</v-icon>
+              </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-sheet>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>
-/* Estilos simplificados e básicos */
-.app {
-  max-width: 600px;
-  margin: 0 auto;
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #f4f4f9;
-  border-radius: 8px;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.create-todo {
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.input-field {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.button-submit {
-  width: 100%;
-  padding: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.button-submit:hover {
-  background-color: #45a049;
-}
-
-.todo-list {
-  background: #ffffff;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.todo-item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.todo-item.completed label span {
+.completed .v-list-item-title {
   text-decoration: line-through;
-}
-
-.delete-button {
-  padding: 5px 10px;
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.delete-button:hover {
-  background-color: #e60000;
 }
 </style>
